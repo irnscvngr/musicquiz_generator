@@ -10,5 +10,5 @@ dependencies:
   - pandas=2.0
   - pip:
     - qrcode==7.4
-    - Pillow==10.4
+    - Pillow
     - spotipy==2.23

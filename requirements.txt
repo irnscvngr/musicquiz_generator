@@ -1,0 +1,6 @@
+qrcode
+matplotlib
+PIL
+numpy
+spotipy
+pandas

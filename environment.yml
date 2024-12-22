@@ -5,6 +5,7 @@ channels:
 dependencies:
   - python=3.8
   - matplotlib=3.7
-  - numpy=1.24
-  - pandas=2.0
   - pip:
+    - qrcode
+    - Pillow
+    - spotipy

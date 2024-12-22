@@ -1,6 +1,13 @@
-qrcode
-matplotlib
-PIL
-numpy
-spotipy
-pandas
+name: musicquiz_generator-env
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.9  # Or 3.10, 3.11, depending on your needs
+  - matplotlib
+  - numpy
+  - pandas
+  - pip:
+    - qrcode
+    - Pillow  # PIL fork (recommended)
+    - spotipy

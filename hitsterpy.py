@@ -57,7 +57,7 @@ def create_qr_code_grid(data_list=['Test'], rows=5, cols=4, border=6):
                 break
 
             # <-<-<- Filling from right to left:
-            grid_image.paste(qr_code_images[index], ((cols-j-1) * width, i * height),qr_code_images[index])
+            grid_image.paste(qr_code_images[index], ((cols-j-1) * width, i * height))
 
     fig, ax = plt.subplots()
 

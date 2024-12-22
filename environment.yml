@@ -1,9 +1,9 @@
 name: musicquiz_generator-env
 channels:
   - conda-forge
-  - defaults
 dependencies:
   - python=3.8
+  - pip
   - matplotlib=3.7
   - numpy=1.24
   - pandas=2.0

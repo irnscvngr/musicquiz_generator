@@ -56,7 +56,6 @@ def create_qr_code_grid(data_list=['Test'], rows=5, cols=4, border=6):
     # Paste each QR code image into the grid
     for i in range(rows):
         for j in range(cols):
-            print(f"[INFO] Pasting image {i+j+1}/{rows+cols}!")
             index = i * cols + j
             if index>=len(data_list):
                 break

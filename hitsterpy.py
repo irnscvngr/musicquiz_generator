@@ -1,9 +1,11 @@
+from datetime import datetime
 import qrcode
 import matplotlib.pyplot as plt
 from matplotlib.patches import Rectangle
 from matplotlib.backends.backend_pdf import PdfPages
 from PIL import Image
 import numpy as np
+import pandas as pd
 import io
 
 from spotify_get_list import playlist_to_df
@@ -224,14 +226,23 @@ def page_info(index=0, fontsize=6):
 
 # ------------------------------------------------------------
 def hitster_from_playlist(playlist_url:str):
+    print("\n--------------------------------------------------")
+    print(f"[INFO] {datetime.now().strftime( '%d.%m.%Y, %H:%M:%S')} | CREATING NEW PLAYLIST...")
     # Get playlist DataFrame from Spotify-URL
     playlist_df = playlist_to_df(playlist_url)
     # Write necessary info to songlist_df
-    songlist_df = playlist_df[['track_name','artist_name','album_release_date','track_url']]
-    # Only keep year of release date
-    songlist_df.loc[:,'album_release_date'] = songlist_df['album_release_date'].dt.year
+    songlist_df = playlist_df.copy()[['track_name','artist_name','album_release_date','track_url']]
+
+    # Add year of release date
+    songlist_df.loc[:,'album_release_year'] = songlist_df['album_release_date'].dt.year
+
     # Rename columns so it fit's with remaining code
-    songlist_df.columns = ['Title','Artist','Year','Link']
+    songlist_df.rename(columns = {
+        'track_name':'Title',
+        'artist_name':'Artist',
+        'album_release_year':'Year',
+        'track_url':'Link'},
+        inplace=True)
     
     # Grid-size
     rows = 5

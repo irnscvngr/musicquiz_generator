@@ -39,6 +39,8 @@ def create_qr_code_grid(data_list=['Test'], rows=5, cols=4, border=6):
     for data in data_list:
         qr_code_images.append(generate_qr_code(data,border))
 
+    print("[INFO] Created QR-code images!")
+
     # Calculate the size of each individual QR code
     width, height = qr_code_images[0].size
 
@@ -46,22 +48,28 @@ def create_qr_code_grid(data_list=['Test'], rows=5, cols=4, border=6):
     grid_width = cols * width
     grid_height = rows * height
 
+    print(f"[INFO] Creating images of size {grid_width}x{grid_height}")
+
     # Create a blank white image for the grid
     grid_image = Image.new("RGB", (grid_width, grid_height), "white")
 
     # Paste each QR code image into the grid
     for i in range(rows):
         for j in range(cols):
+            print(f"[INFO] Pasting image {i+j+1}/{rows+cols}!")
             index = i * cols + j
             if index>=len(data_list):
                 break
 
-            # <-<-<- Filling from right to left:
-            grid_image.paste(qr_code_images[index], ((cols-j-1) * width, i * height))
+            # # <-<-<- Filling from right to left:           
+            qr_img = qr_code_images[index].get_image()
+            grid_image.paste(qr_img, ((cols - j - 1) * width, i * height))
 
     fig, ax = plt.subplots()
 
     ax.imshow(grid_image)
+
+    print("[INFO] Created ax-object with QR-codes!")
 
     # --- ADD CUT-OUT-HELPER RECTANGLES TO IMAGE
     xmin = ax.get_xlim()[0]
@@ -90,6 +98,7 @@ def create_qr_code_grid(data_list=['Test'], rows=5, cols=4, border=6):
     ax.set_xticklabels([])
     ax.set_yticklabels([])
 
+    print("[INFO] Succesfully generated image grid!")
     # Return matplotlib figure
     return fig
 

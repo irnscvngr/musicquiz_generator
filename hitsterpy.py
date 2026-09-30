@@ -104,20 +104,30 @@ def create_qr_code_grid(data_list=['Test'], rows=5, cols=4, border=6):
     return fig
 
 # ------------------------------------------------------------
-def linebreaker(txtstr,Lmax=40,joined=False):
+def linebreaker(txtstr, Lmax_total=100, Lmax=40, joined=False):
     """
     - Takes string input
     - Returns either
       - List of strings not longer than Lmax
       - Single string with linebreaks (\n) after every Lmax
     """
+    print(txtstr)
+    if len(txtstr)>Lmax_total:
+        txtstr = txtstr[:Lmax_total] + '...'
+
     # Initialize list for line-wise substrings
     breakstr = []
 
+    # Break input string at empty spaces -> get list
     str_elemens = txtstr.split()
 
-    if(max([len(substr) for substr in str_elemens]))>Lmax:
-        return "! LINEBREAK-ERROR !"
+    # Cut off single word strings that exceed Lmax
+    if (len(str_elemens)==1) and (len(txtstr)>Lmax):
+        txtstr = txtstr[:Lmax] + '...'
+        if joined:
+            return txtstr
+        else:
+            return [txtstr]
 
     # Go through text
     for _ in range(len(txtstr)):
@@ -191,7 +201,11 @@ def create_annotation_grid(fontsize=4, data_list=[['track','artist','year']], ro
             # Add annotations
             for k,substr in enumerate(grid_data[i][j]):
                 linepitch = 0.26
-                ax_txt = linebreaker(substr,Lmax=18,joined=True)
+                ax_txt = linebreaker(
+                    substr,
+                    Lmax_total=35,
+                    Lmax=18,
+                    joined=True)
                 ax.text(j+0.5, i+0.5 + k*linepitch - linepitch/1.5, ax_txt,
                         ha='center',
                         va='center',
